@@ -12,8 +12,13 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Contracts\View\View;
+use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use stdClass;
 
 class ArticleResource extends Resource
 {
@@ -80,7 +85,23 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('#')->rowIndex(),
+                ImageColumn::make('thumbnail_sm_filename')
+                    ->disk('thumbnails')
+                    ->label('Sampul')
+                    ->width(208)
+                    ->height(139),
+                TextColumn::make('title')
+                    ->label('Judul'),
+                TextColumn::make('status')
+                    ->formatStateUsing(function (string $state): string {
+                        return $state == 'published' ? 'Sudah Terbit' : 'Masih tersimpan';
+                    })
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'draft' => 'gray',
+                        'published' => 'success'
+                    })
             ])
             ->filters([
                 //
