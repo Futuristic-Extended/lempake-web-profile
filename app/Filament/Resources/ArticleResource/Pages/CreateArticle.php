@@ -31,6 +31,11 @@ class CreateArticle extends CreateRecord
         return $data;
     }
 
+    /**
+     * Gets the file's basename and extension from the given thumbnail's filename.
+     * @param string $thumbnailFilename
+     * @return array<string, string>
+     */
     private function getDividedFileNameAndExtension(string $thumbnailFilename): array
     {
         $originThumbnailBasename = pathinfo($thumbnailFilename, PATHINFO_FILENAME);
@@ -39,6 +44,14 @@ class CreateArticle extends CreateRecord
         return [$originThumbnailBasename, $originThumbnailExt];
     }
 
+    /**
+     * Resizes the thumbnail.
+     * @param string $originPath the original uploaded **filename**.
+     * @param int $width
+     * @param int $height
+     * @param string $suffix used to differentiate the images' filename by its size.
+     * @return string the resized image filename that concated with the given suffix.
+     */
     private function resizeThumbnail(string $originPath, int $width, int $height, string $suffix): string
     {
         try {
@@ -57,6 +70,13 @@ class CreateArticle extends CreateRecord
         }
     }
 
+    /**
+     * Cancels (deletes) the uploaded or resized thumbnails when error occured in the record transaction.
+     * @param string $origin the raw (uploaded by user) thumbnail **filename**.
+     * @param string $sm the small sized thumbnail **filename**.
+     * @param string $lg the large sized thumbnail **filename**.
+     * @return void
+     */
     private function cancelUploadedThumbnails(string $origin, string $sm, string $lg): void
     {
         $this->disk->delete($origin);
