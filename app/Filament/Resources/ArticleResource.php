@@ -34,14 +34,15 @@ class ArticleResource extends Resource
                 Forms\Components\Select::make('status')
                     ->columnSpan(1)
                     ->label('Status')
-                    ->default('publish')
+                    ->default('published')
                     ->options([
-                        'publish' => 'Terbitkan (bisa dibaca oleh siapapun)',
+                        'published' => 'Terbitkan (bisa dibaca oleh siapapun)',
                         'draft' => 'Draf (simpan artikel untuk dilanjutkan nanti)',
                     ])
                     ->required(),
                 FileUpload::make('thumbnail')
                     ->columnSpan(3)
+                    ->disk('thumbnails')
                     ->label('Gambar sampul (cover)'),
                 Forms\Components\RichEditor::make('content')
                     ->columnSpan(3)

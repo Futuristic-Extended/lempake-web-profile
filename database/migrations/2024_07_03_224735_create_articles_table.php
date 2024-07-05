@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('writer_id')->nullable();
-            $table->string('thumbnail_sm_url', 255)->nullable(false);
-            $table->string('thumbnail_lg_url', 255)->nullable(false);
+            $table->string('thumbnail_sm_url', 255)->nullable();
+            $table->string('thumbnail_lg_url', 255)->nullable();
             $table->string('title', 150)->nullable(false);
             $table->mediumText('content')->nullable(false);
             $table->enum('status', ['published', 'draft'])->default('published')->nullable(false);
