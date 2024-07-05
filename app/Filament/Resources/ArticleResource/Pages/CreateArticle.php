@@ -16,10 +16,12 @@ class CreateArticle extends CreateRecord
     protected static ?string $title = 'Buat artikel';
 
     protected ImageManager $imageManager;
+    protected Storage $disk;
 
     public function __construct()
     {
         $this->imageManager = ImageManager::imagick();
+        $this->disk = Storage::disk('thumbnails');
     }
 
     protected function mutateFormDataBeforeCreate(array $data): array
@@ -30,21 +32,21 @@ class CreateArticle extends CreateRecord
 
     private function getDividedFileNameAndExtension(string $thumbnailFilename): array
     {
-        $originalThumbnailBasename = pathinfo($thumbnailFilename, PATHINFO_FILENAME);
-        $originalThumbnailExt = pathinfo($thumbnailFilename, PATHINFO_EXTENSION);
+        $originThumbnailBasename = pathinfo($thumbnailFilename, PATHINFO_FILENAME);
+        $originThumbnailExt = pathinfo($thumbnailFilename, PATHINFO_EXTENSION);
 
-        return [$originalThumbnailBasename, $originalThumbnailExt];
+        return [$originThumbnailBasename, $originThumbnailExt];
     }
 
-    private function resizeThumbnail(string $originalPath, int $width, int $height, string $suffix): string
+    private function resizeThumbnail(string $originPath, int $width, int $height, string $suffix): string
     {
         try {
-            [$basename, $extension] = $this->getDividedFileNameAndExtension($originalPath);
+            [$basename, $extension] = $this->getDividedFileNameAndExtension($originPath);
 
             $thumbnailName = "{$basename}_{$suffix}.{$extension}";
             $thumbnailPath = storage_path("app/public/thumbnails/{$thumbnailName}");
 
-            $image = $this->imageManager->read($originalPath);
+            $image = $this->imageManager->read($originPath);
             $image->resize($width, $height);
             $image->save($thumbnailPath);
 
@@ -54,19 +56,32 @@ class CreateArticle extends CreateRecord
         }
     }
 
+    private function cancelUploadedThumbnails(string $origin, string $sm, string $lg): void
+    {
+        $this->disk->delete($origin);
+        $this->disk->delete($sm);
+        $this->disk->delete($lg);
+    }
+
     protected function handleRecordCreation(array $data): Model
     {
         try {
-            $originalThumbnailPath = storage_path("app/public/thumbnails/{$data['thumbnail']}");
+            $originThumbnailPath = storage_path("app/public/thumbnails/{$data['thumbnail']}");
 
-            $smSizeThumbnailName = $this->resizeThumbnail($originalThumbnailPath, 416, 279, 'sm');
-            $lgSizeThumbnailName = $this->resizeThumbnail($originalThumbnailPath, 1248, 837, 'lg');
+            $smSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 416, 279, 'sm');
+            $lgSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 1248, 837, 'lg');
 
             $data['thumbnail_sm_filename'] = $smSizeThumbnailName;
             $data['thumbnail_lg_filename'] = $lgSizeThumbnailName;
 
             return static::getModel()::create($data);
         } catch (RuntimeException $error) {
+            $this->cancelUploadedThumbnails(
+                origin: $originThumbnailPath,
+                sm: $smSizeThumbnailName,
+                lg: $lgSizeThumbnailName
+            );
+
             throw $error;
         }
     }
