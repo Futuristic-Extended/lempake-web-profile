@@ -38,9 +38,10 @@ class ArticleResource extends Resource
                     ->columnSpan(1)
                     ->label('Status')
                     ->default('published')
+                    ->selectablePlaceholder(false)
                     ->options([
-                        'published' => 'Terbitkan (bisa dibaca oleh siapapun)',
-                        'draft' => 'Draf (simpan artikel untuk dilanjutkan nanti)',
+                        'published' => 'Terbitkan (bisa langsung dibaca secara publik)',
+                        'draft' => 'Draf (simpan artikel untuk ditulis nanti)',
                     ])
                     ->required()
                     ->validationMessages([
@@ -50,10 +51,14 @@ class ArticleResource extends Resource
                     ->columnSpan(3)
                     ->disk('thumbnails')
                     ->label('Gambar sampul (cover)')
+                    ->uploadingMessage('Mengunggah gambar')
+                    ->maxSize(5000)
                     ->required()
                     ->validationMessages([
                         'required' => 'Mohon masukkan sampul (gambar atau foto) artikel'
-                    ]),
+                    ])
+                    ->acceptedFileTypes(['image/jpg', 'image/jpeg', 'image/png'])
+                    ->placeholder('Masukkan sampul artikel di sini, gambar sampul hanya boleh bertipe jpg, jpeg, atau png.'),
                 Forms\Components\RichEditor::make('content')
                     ->columnSpan(3)
                     ->label('Konten')
