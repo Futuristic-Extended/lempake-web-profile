@@ -29,8 +29,11 @@ class ArticleResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->columnSpan(2)
                     ->label('Judul')
-                    ->maxLength(255)
-                    ->required(),
+                    ->maxLength(150)
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Mohon isi judul artikel'
+                    ]),
                 Forms\Components\Select::make('status')
                     ->columnSpan(1)
                     ->label('Status')
@@ -39,17 +42,26 @@ class ArticleResource extends Resource
                         'published' => 'Terbitkan (bisa dibaca oleh siapapun)',
                         'draft' => 'Draf (simpan artikel untuk dilanjutkan nanti)',
                     ])
-                    ->required(),
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Mohon pilih status artikel'
+                    ]),
                 FileUpload::make('thumbnail')
                     ->columnSpan(3)
                     ->disk('thumbnails')
                     ->label('Gambar sampul (cover)')
-                    ->required(),
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Mohon masukkan sampul (gambar atau foto) artikel'
+                    ]),
                 Forms\Components\RichEditor::make('content')
                     ->columnSpan(3)
                     ->label('Konten')
                     ->default('Tulis konten artikelnya disini...')
-                    ->required(),
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'Mohon isi konten dari artikel'
+                    ]),
             ]);
     }
 
