@@ -21,6 +21,12 @@ class ArticleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $modelLabel = 'Artikel';
+
+    protected static ?string $pluralModelLabel = 'Artikel';
+
+    protected static ?string $breadcrumb = 'Artikel';
+
     public static function form(Form $form): Form
     {
         return $form

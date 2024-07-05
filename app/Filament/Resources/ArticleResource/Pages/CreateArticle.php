@@ -14,15 +14,22 @@ use RuntimeException;
 class CreateArticle extends CreateRecord
 {
     protected static string $resource = ArticleResource::class;
-    protected static ?string $title = 'Buat artikel';
+
+    protected static ?string $title = 'Tulis artikel';
 
     protected ImageManager $imageManager;
+    
     protected Filesystem $disk;
 
     public function __construct()
     {
         $this->imageManager = ImageManager::imagick();
         $this->disk = Storage::disk('thumbnails');
+    }
+
+    public function getBreadcrumb(): string
+    {
+        return 'Tulis artikel';
     }
 
     protected function mutateFormDataBeforeCreate(array $data): array
