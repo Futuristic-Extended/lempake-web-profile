@@ -43,7 +43,8 @@ class ArticleResource extends Resource
                 FileUpload::make('thumbnail')
                     ->columnSpan(3)
                     ->disk('thumbnails')
-                    ->label('Gambar sampul (cover)'),
+                    ->label('Gambar sampul (cover)')
+                    ->required(),
                 Forms\Components\RichEditor::make('content')
                     ->columnSpan(3)
                     ->label('Konten')

@@ -11,8 +11,8 @@ class Article extends Model
 
     protected $fillable = [
         'writer_id',
-        'thumbnail_sm_url',
-        'thumbnail_lg_url',
+        'thumbnail_sm_filename',
+        'thumbnail_lg_filename',
         'title',
         'content',
         'status'
