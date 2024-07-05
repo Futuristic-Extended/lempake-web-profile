@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
@@ -16,7 +17,7 @@ class CreateArticle extends CreateRecord
     protected static ?string $title = 'Buat artikel';
 
     protected ImageManager $imageManager;
-    protected Storage $disk;
+    protected Filesystem $disk;
 
     public function __construct()
     {
