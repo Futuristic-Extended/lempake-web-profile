@@ -28,12 +28,19 @@ class CreateArticle extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        $thumbnailPath = storage_path('app/public/thumbnails/'.$data['thumbnail']);
+        $originalThumbnailPath = storage_path('app/public/thumbnails/'.$data['thumbnail']);
+        $originalThumbnailBasename = explode('.', pathinfo($data['thumbnail'], PATHINFO_BASENAME))[0];
+        $originalThumbnailExt = pathinfo($data['thumbnail'], PATHINFO_EXTENSION);
+
+        $smallSizeThumbnailName = $originalThumbnailBasename . '_sm.' . $originalThumbnailExt;
+        $smallSizeThumbnailPath = storage_path('app/public/thumbnails/'.$smallSizeThumbnailName);
 
         // Resize original image to become the small thumbnail
-        $image = ImageManager::imagick()->read($thumbnailPath);
+        $image = ImageManager::imagick()->read($originalThumbnailPath);
         $image->resize(width: 416, height: 279);
-        $image->save($thumbnailPath);
+        $image->save($smallSizeThumbnailPath);
+
+        $data['thumbnail_sm_url'] = $smallSizeThumbnailName;
 
         return static::getModel()::create($data);
     }
