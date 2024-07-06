@@ -38,29 +38,27 @@ class CreateArticle extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        $smSizeThumbnailName = '';
-        $lgSizeThumbnailName = '';
-        
         try {
-            $originThumbnailPath = storage_path("app/public/thumbnails/{$data['thumbnail']}");
+            $smThumbnailName = '';
+            $lgThumbnailName = '';
 
-            $smSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 416, 279, 'sm');
-            $lgSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 1248, 837, 'lg');
+            $originThumbnailName = $data['thumbnail'];
+            $originThumbnailPath = storage_path("app/public/thumbnails/$originThumbnailName");
 
-            $data['thumbnail_sm_filename'] = $smSizeThumbnailName;
-            $data['thumbnail_lg_filename'] = $lgSizeThumbnailName;
+            $smThumbnailName = $this->resizeThumbnail($originThumbnailPath, 416, 279, 'sm');
+            $lgThumbnailName = $this->resizeThumbnail($originThumbnailPath, 1248, 837, 'lg');
 
-            $this->disk->delete($data['thumbnail']);
+            $data['thumbnail_sm_filename'] = $smThumbnailName;
+            $data['thumbnail_lg_filename'] = $lgThumbnailName;
 
             return static::getModel()::create($data);
         } catch (RuntimeException $error) {
-            $this->cancelUploadedThumbnails(
-                origin: $originThumbnailPath,
-                sm: $smSizeThumbnailName,
-                lg: $lgSizeThumbnailName
-            );
+            $this->disk->delete($smThumbnailName);
+            $this->disk->delete($lgThumbnailName);
 
             throw $error;
+        } finally {
+            $this->disk->delete($originThumbnailName);
         }
     }
 

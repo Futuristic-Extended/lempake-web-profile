@@ -43,39 +43,41 @@ class EditArticle extends EditRecord
             $isUpdatingThumbnail = isset($data['thumbnail']) && $data['thumbnail'] != null;
 
             if ($isUpdatingThumbnail) {
-                $smSizeThumbnailName = '';
-                $lgSizeThumbnailName = '';
+                $smThumbnailName = '';
+                $lgThumbnailName = '';
 
-                $oldSmSizeThumbnailName = $record->thumbnail_sm_filename;
-                $oldLgSizeThumbnailName = $record->thumbnail_lg_filename;
+                $oldSmThumbnailName = $record->thumbnail_sm_filename;
+                $oldLgThumbnailName = $record->thumbnail_lg_filename;
+                
+                $originThumbnailName = $data['thumbnail'];
+                $originThumbnailPath = storage_path("app/public/thumbnails/$originThumbnailName");
+
+                $smThumbnailName = $this->resizeThumbnail($originThumbnailPath, 416, 279, 'sm');
+                $lgThumbnailName = $this->resizeThumbnail($originThumbnailPath, 1248, 837, 'lg');
     
-                $originThumbnailPath = storage_path("app/public/thumbnails/{$data['thumbnail']}");
-                $smSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 416, 279, 'sm');
-                $lgSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 1248, 837, 'lg');
-    
-                $data['thumbnail_sm_filename'] = $smSizeThumbnailName;
-                $data['thumbnail_lg_filename'] = $lgSizeThumbnailName;
+                $data['thumbnail_sm_filename'] = $smThumbnailName;
+                $data['thumbnail_lg_filename'] = $lgThumbnailName;
             }
 
             $record->update($data);
 
             if ($isUpdatingThumbnail) {
-                $this->disk->delete($data['thumbnail']);
-                $this->disk->delete($oldSmSizeThumbnailName);
-                $this->disk->delete($oldLgSizeThumbnailName);
+                $this->disk->delete($oldSmThumbnailName);
+                $this->disk->delete($oldLgThumbnailName);
             }
 
             return $record;
         } catch (RuntimeException $error) {
             if ($isUpdatingThumbnail) {
-                $this->cancelUploadedThumbnails(
-                    origin: $originThumbnailPath,
-                    sm: $smSizeThumbnailName,
-                    lg: $lgSizeThumbnailName
-                );
+                $this->disk->delete($smThumbnailName);
+                $this->disk->delete($lgThumbnailName);
             }
 
             throw $error;
+        } finally {
+            if ($isUpdatingThumbnail) {
+                $this->disk->delete($originThumbnailName);
+            }
         }
     }
 }

@@ -49,18 +49,4 @@ trait ResizeImage {
             throw $error;
         }
     }
-
-    /**
-     * Cancels (deletes) the uploaded or resized article's thumbnails when error occured in the record transaction.
-     * @param string $origin the raw (uploaded by user) thumbnail **filename**.
-     * @param string $sm the small sized thumbnail **filename**.
-     * @param string $lg the large sized thumbnail **filename**.
-     * @return void
-     */
-    private function cancelUploadedThumbnails(string $origin, string $sm, string $lg): void
-    {
-        $this->disk->delete($origin);
-        $this->disk->delete($sm);
-        $this->disk->delete($lg);
-    }
 }
