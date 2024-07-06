@@ -5,21 +5,19 @@ namespace App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
+use App\Trait\ResizeImage;
 use RuntimeException;
 
 class CreateArticle extends CreateRecord
 {
+    use ResizeImage;
+
     protected static string $resource = ArticleResource::class;
 
     protected static ?string $title = 'Tulis artikel';
-
-    protected ImageManager $imageManager;
-    
-    protected Filesystem $disk;
 
     public function __construct()
     {
@@ -38,59 +36,6 @@ class CreateArticle extends CreateRecord
         return $data;
     }
 
-    /**
-     * Gets the file's basename and extension from the given thumbnail's filename.
-     * @param string $thumbnailFilename
-     * @return array<string, string>
-     */
-    private function getDividedFileNameAndExtension(string $thumbnailFilename): array
-    {
-        $originThumbnailBasename = pathinfo($thumbnailFilename, PATHINFO_FILENAME);
-        $originThumbnailExt = pathinfo($thumbnailFilename, PATHINFO_EXTENSION);
-
-        return [$originThumbnailBasename, $originThumbnailExt];
-    }
-
-    /**
-     * Resizes the thumbnail.
-     * @param string $originPath the original uploaded **filename**.
-     * @param int $width
-     * @param int $height
-     * @param string $suffix used to differentiate the images' filename by its size.
-     * @return string the resized image filename that concated with the given suffix.
-     */
-    private function resizeThumbnail(string $originPath, int $width, int $height, string $suffix): string
-    {
-        try {
-            [$basename, $extension] = $this->getDividedFileNameAndExtension($originPath);
-
-            $thumbnailName = "{$basename}_{$suffix}.{$extension}";
-            $thumbnailPath = storage_path("app/public/thumbnails/{$thumbnailName}");
-
-            $image = $this->imageManager->read($originPath);
-            $image->resize($width, $height);
-            $image->save($thumbnailPath);
-
-            return $thumbnailName;
-        } catch (RuntimeException $error) {
-            throw $error;
-        }
-    }
-
-    /**
-     * Cancels (deletes) the uploaded or resized thumbnails when error occured in the record transaction.
-     * @param string $origin the raw (uploaded by user) thumbnail **filename**.
-     * @param string $sm the small sized thumbnail **filename**.
-     * @param string $lg the large sized thumbnail **filename**.
-     * @return void
-     */
-    private function cancelUploadedThumbnails(string $origin, string $sm, string $lg): void
-    {
-        $this->disk->delete($origin);
-        $this->disk->delete($sm);
-        $this->disk->delete($lg);
-    }
-
     protected function handleRecordCreation(array $data): Model
     {
         $smSizeThumbnailName = '';
@@ -104,6 +49,8 @@ class CreateArticle extends CreateRecord
 
             $data['thumbnail_sm_filename'] = $smSizeThumbnailName;
             $data['thumbnail_lg_filename'] = $lgSizeThumbnailName;
+
+            $this->disk->delete($originThumbnailPath);
 
             return static::getModel()::create($data);
         } catch (RuntimeException $error) {

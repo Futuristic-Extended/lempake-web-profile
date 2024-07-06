@@ -9,15 +9,14 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
+use App\Trait\ResizeImage;
 use RuntimeException;
 
 class EditArticle extends EditRecord
 {
-    protected static string $resource = ArticleResource::class;
+    use ResizeImage;
 
-    protected ImageManager $imageManager;
-    
-    protected Filesystem $disk;
+    protected static string $resource = ArticleResource::class;
 
     public function __construct()
     {
@@ -38,82 +37,43 @@ class EditArticle extends EditRecord
         return $resource::getUrl('view', ['record' => $this->getRecord()]);
     }
 
-    /**
-     * Gets the file's basename and extension from the given thumbnail's filename.
-     * @param string $thumbnailFilename
-     * @return array<string, string>
-     */
-    private function getDividedFileNameAndExtension(string $thumbnailFilename): array
-    {
-        $originThumbnailBasename = pathinfo($thumbnailFilename, PATHINFO_FILENAME);
-        $originThumbnailExt = pathinfo($thumbnailFilename, PATHINFO_EXTENSION);
-
-        return [$originThumbnailBasename, $originThumbnailExt];
-    }
-
-    /**
-     * Resizes the thumbnail.
-     * @param string $originPath the original uploaded **filename**.
-     * @param int $width
-     * @param int $height
-     * @param string $suffix used to differentiate the images' filename by its size.
-     * @return string the resized image filename that concated with the given suffix.
-     */
-    private function resizeThumbnail(string $originPath, int $width, int $height, string $suffix): string
-    {
-        try {
-            [$basename, $extension] = $this->getDividedFileNameAndExtension($originPath);
-
-            $thumbnailName = "{$basename}_{$suffix}.{$extension}";
-            $thumbnailPath = storage_path("app/public/thumbnails/{$thumbnailName}");
-
-            $image = $this->imageManager->read($originPath);
-            $image->resize($width, $height);
-            $image->save($thumbnailPath);
-
-            return $thumbnailName;
-        } catch (RuntimeException $error) {
-            throw $error;
-        }
-    }
-
-    /**
-     * Cancels (deletes) the uploaded or resized thumbnails when error occured in the record transaction.
-     * @param string $origin the raw (uploaded by user) thumbnail **filename**.
-     * @param string $sm the small sized thumbnail **filename**.
-     * @param string $lg the large sized thumbnail **filename**.
-     * @return void
-     */
-    private function cancelUploadedThumbnails(string $origin, string $sm, string $lg): void
-    {
-        $this->disk->delete($origin);
-        $this->disk->delete($sm);
-        $this->disk->delete($lg);
-    }
-
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        $smSizeThumbnailName = '';
-        $lgSizeThumbnailName = '';
-        
         try {
-            $originThumbnailPath = storage_path("app/public/thumbnails/{$data['thumbnail']}");
+            $isUpdatingThumbnail = isset($data['thumbnail']) && $data['thumbnail'] != null;
 
-            $smSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 416, 279, 'sm');
-            $lgSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 1248, 837, 'lg');
+            if ($isUpdatingThumbnail) {
+                $smSizeThumbnailName = '';
+                $lgSizeThumbnailName = '';
 
-            $data['thumbnail_sm_filename'] = $smSizeThumbnailName;
-            $data['thumbnail_lg_filename'] = $lgSizeThumbnailName;
+                $oldSmSizeThumbnailName = $record->thumbnail_sm_filename;
+                $oldLgSizeThumbnailName = $record->thumbnail_lg_filename;
+    
+                $originThumbnailPath = storage_path("app/public/thumbnails/{$data['thumbnail']}");
+                $smSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 416, 279, 'sm');
+                $lgSizeThumbnailName = $this->resizeThumbnail($originThumbnailPath, 1248, 837, 'lg');
+    
+                $data['thumbnail_sm_filename'] = $smSizeThumbnailName;
+                $data['thumbnail_lg_filename'] = $lgSizeThumbnailName;
+            }
 
             $record->update($data);
 
+            if ($isUpdatingThumbnail) {
+                $this->disk->delete($originThumbnailPath);
+                $this->disk->delete($oldSmSizeThumbnailName);
+                $this->disk->delete($oldLgSizeThumbnailName);
+            }
+
             return $record;
         } catch (RuntimeException $error) {
-            $this->cancelUploadedThumbnails(
-                origin: $originThumbnailPath,
-                sm: $smSizeThumbnailName,
-                lg: $lgSizeThumbnailName
-            );
+            if ($isUpdatingThumbnail) {
+                $this->cancelUploadedThumbnails(
+                    origin: $originThumbnailPath,
+                    sm: $smSizeThumbnailName,
+                    lg: $lgSizeThumbnailName
+                );
+            }
 
             throw $error;
         }
