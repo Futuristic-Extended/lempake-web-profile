@@ -60,7 +60,7 @@ class EditArticle extends EditRecord
             $record->update($data);
 
             if ($isUpdatingThumbnail) {
-                $this->disk->delete($originThumbnailPath);
+                $this->disk->delete($data['thumbnail']);
                 $this->disk->delete($oldSmSizeThumbnailName);
                 $this->disk->delete($oldLgSizeThumbnailName);
             }

@@ -50,7 +50,7 @@ class CreateArticle extends CreateRecord
             $data['thumbnail_sm_filename'] = $smSizeThumbnailName;
             $data['thumbnail_lg_filename'] = $lgSizeThumbnailName;
 
-            $this->disk->delete($originThumbnailPath);
+            $this->disk->delete($data['thumbnail']);
 
             return static::getModel()::create($data);
         } catch (RuntimeException $error) {
