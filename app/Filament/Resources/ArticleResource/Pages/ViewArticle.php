@@ -22,4 +22,12 @@ class ViewArticle extends ViewRecord
     {
         return $this->record->title;
     }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\EditAction::make()
+                ->label('Edit artikel'),
+        ];
+    }
 }
