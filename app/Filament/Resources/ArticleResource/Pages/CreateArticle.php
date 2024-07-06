@@ -136,7 +136,7 @@ class CreateArticle extends CreateRecord
     protected function getRedirectUrl(): string
     {
         $resource = static::getResource();
-        return $resource::getUrl('index');
+        return $resource::getUrl('view', ['record' => $this->getRecord()]);
     }
 
     public static function canCreateAnother(): bool
