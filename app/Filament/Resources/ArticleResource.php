@@ -98,11 +98,11 @@ class ArticleResource extends Resource
                     ->label('Judul'),
                 TextColumn::make('status')
                     ->formatStateUsing(function (string $state): string {
-                        return $state == 'published' ? 'Sudah Terbit' : 'Masih tersimpan';
+                        return $state == 'published' ? 'Terbit' : 'Masih disimpan';
                     })
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'draft' => 'gray',
+                        'draft' => 'warning',
                         'published' => 'success'
                     })
             ])
