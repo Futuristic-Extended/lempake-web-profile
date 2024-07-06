@@ -78,6 +78,7 @@ class ArticleResource extends Resource
                     ->label('Konten')
                     ->default('Tulis konten artikelnya disini...')
                     ->required()
+                    ->fileAttachmentsDisk('content-images')
                     ->validationMessages([
                         'required' => 'Mohon isi konten dari artikel'
                     ]),
