@@ -93,6 +93,9 @@ class CreateArticle extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
+        $smSizeThumbnailName = '';
+        $lgSizeThumbnailName = '';
+        
         try {
             $originThumbnailPath = storage_path("app/public/thumbnails/{$data['thumbnail']}");
 

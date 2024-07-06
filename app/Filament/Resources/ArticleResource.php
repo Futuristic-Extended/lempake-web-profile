@@ -12,12 +12,16 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\BaseFileUpload;
+use Filament\Resources\Pages\Page;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\View\View;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use stdClass;
 
 class ArticleResource extends Resource
@@ -54,7 +58,6 @@ class ArticleResource extends Resource
                         'published' => 'Terbitkan (bisa langsung dibaca secara publik)',
                         'draft' => 'Draf (simpan artikel untuk ditulis nanti)',
                     ])
-                    ->required()
                     ->validationMessages([
                         'required' => 'Mohon pilih status artikel'
                     ]),
@@ -64,7 +67,7 @@ class ArticleResource extends Resource
                     ->label('Gambar sampul (cover)')
                     ->uploadingMessage('Mengunggah gambar')
                     ->maxSize(5000)
-                    ->required()
+                    ->required(fn (Page $livewire): bool => $livewire instanceof Pages\CreateArticle)
                     ->validationMessages([
                         'required' => 'Mohon masukkan sampul (gambar atau foto) artikel'
                     ])
