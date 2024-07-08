@@ -38,13 +38,15 @@ class GalleryResource extends Resource
                     ->required(),
                 Textarea::make('description')
                     ->columnSpanFull()
-                    ->label('Keterangan')
-                    ->maxLength(200)
-                    ->required(),
+                    ->label('Keterangan (opsional)')
+                    ->maxLength(200),
                 FileUpload::make('images')
                     ->columnSpanFull()
+                    ->multiple()
+                    ->disk('galleries')
                     ->label('Gambar (bisa lebih dari satu)')
                     ->placeholder('Masukkan gambar-gambar di sini, gambar hanya boleh bertipe jpg, jpeg, atau png.')
+                    ->acceptedFileTypes(['image/jpg', 'image/jpeg', 'image/png'])
                     ->required(),
             ]);
     }

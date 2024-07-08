@@ -60,6 +60,14 @@ return [
             'throw' => false,
         ],
 
+        'galleries' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/galleries'),
+            'url' => env('APP_URL').'/storage/galleries',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

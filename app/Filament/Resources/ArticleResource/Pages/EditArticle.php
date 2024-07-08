@@ -52,8 +52,9 @@ class EditArticle extends EditRecord
                 $originThumbnailName = $data['thumbnail'];
                 $originThumbnailPath = storage_path("app/public/thumbnails/$originThumbnailName");
 
-                $smThumbnailName = $this->resizeThumbnail($originThumbnailPath, 416, 279, 'sm');
-                $lgThumbnailName = $this->resizeThumbnail($originThumbnailPath, 1248, 837, 'lg');
+                $destPath = storage_path("app/public/thumbnails");
+                $smThumbnailName = $this->resizeImage($originThumbnailPath, 416, 279, 'sm', $destPath);
+                $lgThumbnailName = $this->resizeImage($originThumbnailPath, 1248, 837, 'lg', $destPath);
     
                 $data['thumbnail_sm_filename'] = $smThumbnailName;
                 $data['thumbnail_lg_filename'] = $lgThumbnailName;

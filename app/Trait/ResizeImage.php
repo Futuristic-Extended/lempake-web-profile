@@ -25,26 +25,26 @@ trait ResizeImage {
     }
 
     /**
-     * Resizes the thumbnail.
+     * Resizes an image.
      * @param string $originPath the original uploaded **filename**.
      * @param int $width
      * @param int $height
      * @param string $suffix used to differentiate the images' filename by its size.
      * @return string the resized image filename that concated with the given suffix.
      */
-    private function resizeThumbnail(string $originPath, int $width, int $height, string $suffix): string
+    private function resizeImage(string $originPath, int $width, int $height, string $suffix, string $destPath): string
     {
         try {
             [$basename, $extension] = $this->getDividedFileNameAndExtension($originPath);
 
-            $thumbnailName = "{$basename}_{$suffix}.{$extension}";
-            $thumbnailPath = storage_path("app/public/thumbnails/{$thumbnailName}");
+            $imageName = "{$basename}_{$suffix}.{$extension}";
+            $imagePath = "$destPath/$imageName";
 
             $image = $this->imageManager->read($originPath);
             $image->resize($width, $height);
-            $image->save($thumbnailPath);
+            $image->save($imagePath);
 
-            return $thumbnailName;
+            return $imageName;
         } catch (RuntimeException $error) {
             throw $error;
         }
