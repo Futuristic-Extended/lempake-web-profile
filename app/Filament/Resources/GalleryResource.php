@@ -14,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Textarea;
+use Filament\Resources\Pages\Page;
 
 class GalleryResource extends Resource
 {
@@ -29,26 +30,29 @@ class GalleryResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->columnSpanFull()
-                    ->label('Judul')
-                    ->maxLength(50)
-                    ->required(),
-                Textarea::make('description')
-                    ->columnSpanFull()
-                    ->label('Keterangan (opsional)')
-                    ->maxLength(200),
-                FileUpload::make('images')
-                    ->columnSpanFull()
-                    ->multiple()
-                    ->disk('galleries')
-                    ->label('Gambar (bisa lebih dari satu)')
-                    ->placeholder('Masukkan gambar-gambar di sini, gambar hanya boleh bertipe jpg, jpeg, atau png.')
-                    ->acceptedFileTypes(['image/jpg', 'image/jpeg', 'image/png'])
-                    ->required(),
-            ]);
+        $schema = [
+            Forms\Components\TextInput::make('title')
+                ->columnSpanFull()
+                ->label('Judul')
+                ->maxLength(50)
+                ->required(),
+            Textarea::make('description')
+                ->columnSpanFull()
+                ->label('Keterangan (opsional)')
+                ->maxLength(200),
+        ];
+        if ($form->getOperation() === 'create') {
+            $schema[] = FileUpload::make('images')
+                ->columnSpanFull()
+                ->multiple()
+                ->disk('galleries')
+                ->label('Gambar (bisa lebih dari satu)')
+                ->placeholder('Masukkan gambar-gambar di sini, gambar hanya boleh bertipe jpg, jpeg, atau png.')
+                ->acceptedFileTypes(['image/jpg', 'image/jpeg', 'image/png'])
+                ->required();
+        }
+
+        return $form->schema($schema);
     }
 
     public static function table(Table $table): Table
