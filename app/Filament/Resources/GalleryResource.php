@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Pages\Page;
+use Filament\Tables\Columns\TextColumn;
 
 class GalleryResource extends Resource
 {
@@ -59,7 +60,17 @@ class GalleryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('#')
+                    ->rowIndex(),
+                TextColumn::make('title')
+                    ->label('Judul'),
+                TextColumn::make('description')
+                    ->label('Keterangan'),
+                TextColumn::make('images_count')
+                    ->label('Jumlah gambar')
+                    ->counts('images'),
+                TextColumn::make('uploader.name')
+                    ->label('Diunggah oleh')
             ])
             ->filters([
                 //
