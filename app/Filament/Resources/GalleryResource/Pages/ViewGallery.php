@@ -10,6 +10,8 @@ class ViewGallery extends ViewRecord
 {
     protected static string $resource = GalleryResource::class;
 
+    protected static string $view = 'filament.gallery.view';
+
     protected function getHeaderActions(): array
     {
         return [
