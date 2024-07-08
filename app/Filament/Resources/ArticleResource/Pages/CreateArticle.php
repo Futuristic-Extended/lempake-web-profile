@@ -65,18 +65,14 @@ class CreateArticle extends CreateRecord
 
     protected function getCreateFormAction(): Actions\Action
     {
-        return Actions\Action::make('create')
-            ->label('Buat artikel')
-            ->submit('create')
-            ->keyBindings(['mod+s']);
+        return parent::getCreateFormAction()
+            ->label('Tulis artikel')
+            ->icon('heroicon-o-pencil-square');
     }
 
     protected function getCancelFormAction(): Actions\Action
     {
-        return Actions\Action::make('cancel')
-            ->label('Batal')
-            ->alpineClickHandler('document.referrer ? window.history.back() : (window.location.href = ' . \Illuminate\Support\Js::from($this->previousUrl ?? static::getResource()::getUrl()) . ')')
-            ->color('gray');
+        return parent::getCancelFormAction()->icon('heroicon-o-arrow-uturn-left');
     }
     
     protected function getRedirectUrl(): string

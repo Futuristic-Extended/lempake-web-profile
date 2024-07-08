@@ -15,7 +15,7 @@ class ViewArticle extends ViewRecord
 
     public function getBreadcrumb(): string
     {
-        return $this->record->title;
+        return 'Isi artikel';
     }
 
     public function getTitle(): string | Htmlable
@@ -27,7 +27,8 @@ class ViewArticle extends ViewRecord
     {
         return [
             Actions\EditAction::make()
-                ->label('Edit artikel'),
+                ->label('Tulis ulang artikel')
+                ->icon('heroicon-o-pencil-square'),
         ];
     }
 }

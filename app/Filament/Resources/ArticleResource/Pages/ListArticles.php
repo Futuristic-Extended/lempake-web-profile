@@ -11,7 +11,7 @@ class ListArticles extends ListRecords
 {
     protected static string $resource = ArticleResource::class;
 
-    protected static ?string $title = 'Artikel';
+    protected static ?string $title = 'Daftar Artikel';
 
     public function getBreadcrumb(): string
     {
@@ -22,7 +22,8 @@ class ListArticles extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label('Tulis artikel'),
+                ->label('Tulis artikel')
+                ->icon('heroicon-o-pencil-square'),
         ];
     }
 }

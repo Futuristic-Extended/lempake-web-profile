@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use App\Trait\ResizeImage;
+use Filament\Actions\Action;
+use Illuminate\Contracts\Support\Htmlable;
 use RuntimeException;
 
 class EditArticle extends EditRecord
@@ -17,6 +19,16 @@ class EditArticle extends EditRecord
     use ResizeImage;
 
     protected static string $resource = ArticleResource::class;
+
+    public function getBreadcrumb(): string
+    {
+        return 'Tulis ulang';
+    }
+
+    public function getTitle(): string | Htmlable
+    {
+        return $this->record->title;
+    }
 
     public function __construct()
     {
@@ -27,7 +39,7 @@ class EditArticle extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->icon('heroicon-o-trash'),
         ];
     }
 
@@ -80,5 +92,15 @@ class EditArticle extends EditRecord
                 $this->disk->delete($originThumbnailName);
             }
         }
+    }
+
+    protected function getSaveFormAction(): Action
+    {
+        return parent::getSaveFormAction()->icon('heroicon-o-check');
+    }
+
+    protected function getCancelFormAction(): Action
+    {
+        return parent::getCancelFormAction()->icon('heroicon-o-arrow-uturn-left');
     }
 }
