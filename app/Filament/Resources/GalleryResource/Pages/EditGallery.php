@@ -5,7 +5,9 @@ namespace App\Filament\Resources\GalleryResource\Pages;
 use App\Filament\Resources\GalleryResource;
 use App\Trait\ResizeImage;
 use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
@@ -16,10 +18,16 @@ class EditGallery extends EditRecord
     use ResizeImage;
 
     protected static string $resource = GalleryResource::class;
+    
+    public function getBreadcrumb(): string
+    {
+        return 'Edit unggahan';
+    }
 
-    protected static ?string $breadcrumb = 'Edit';
-
-    protected static ?string $title = 'Edit galeri';
+    public function getTitle(): string | Htmlable
+    {
+        return $this->record->title;
+    }
 
     public function __construct()
     {
@@ -30,8 +38,11 @@ class EditGallery extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\ViewAction::make()
+                ->label('Lihat gambar')
+                ->icon('heroicon-o-photo'),
+            Actions\DeleteAction::make()
+                ->icon('heroicon-o-trash'),
         ];
     }
 
@@ -42,5 +53,15 @@ class EditGallery extends EditRecord
         } catch (RuntimeException $error) {
             throw $error;
         }
+    }
+
+    protected function getSaveFormAction(): Action
+    {
+        return parent::getSaveFormAction()->icon('heroicon-o-check');
+    }
+
+    protected function getCancelFormAction(): Action
+    {
+        return parent::getCancelFormAction()->icon('heroicon-o-arrow-uturn-left');
     }
 }

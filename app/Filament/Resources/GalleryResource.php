@@ -40,8 +40,9 @@ class GalleryResource extends Resource
             Textarea::make('description')
                 ->columnSpanFull()
                 ->label('Keterangan (opsional)')
-                ->maxLength(200),
+                ->maxLength(200)
         ];
+
         if ($form->getOperation() === 'create') {
             $schema[] = FileUpload::make('images')
                 ->columnSpanFull()
@@ -76,8 +77,12 @@ class GalleryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->label('Lihat gambar')
+                    ->icon('heroicon-o-photo'),
+                Tables\Actions\EditAction::make()
+                    ->icon('heroicon-o-pencil-square')
+                    ->label('Edit unggahan'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

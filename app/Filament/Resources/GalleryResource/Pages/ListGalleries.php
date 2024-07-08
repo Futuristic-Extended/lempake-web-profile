@@ -14,7 +14,8 @@ class ListGalleries extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label('Unggah gambar'),
+                ->label('Unggah gambar')
+                ->icon('heroicon-o-folder-plus'),
         ];
     }
 }

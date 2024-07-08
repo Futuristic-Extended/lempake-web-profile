@@ -19,7 +19,7 @@ class CreateGallery extends CreateRecord
 
     protected static ?string $breadcrumb = 'Unggah';
 
-    protected static ?string $title = 'Unggah galeri';
+    protected static ?string $title = 'Unggah gambar';
 
     public function __construct()
     {
@@ -64,18 +64,14 @@ class CreateGallery extends CreateRecord
 
     protected function getCreateFormAction(): Actions\Action
     {
-        return Actions\Action::make('create')
+        return parent::getCreateFormAction()
             ->label('Unggah')
-            ->submit('create')
-            ->keyBindings(['mod+s']);
+            ->icon('heroicon-o-arrow-up-tray');
     }
 
     protected function getCancelFormAction(): Actions\Action
     {
-        return Actions\Action::make('cancel')
-            ->label('Batal')
-            ->alpineClickHandler('document.referrer ? window.history.back() : (window.location.href = ' . \Illuminate\Support\Js::from($this->previousUrl ?? static::getResource()::getUrl()) . ')')
-            ->color('gray');
+        return parent::getCancelFormAction()->icon('heroicon-o-arrow-uturn-left');
     }
     
     protected function getRedirectUrl(): string
