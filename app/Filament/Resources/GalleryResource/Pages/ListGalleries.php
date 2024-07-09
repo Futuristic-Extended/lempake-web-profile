@@ -10,6 +10,13 @@ class ListGalleries extends ListRecords
 {
     protected static string $resource = GalleryResource::class;
 
+    protected static ?string $title = 'Daftar Unggahan';
+
+    public function getBreadcrumb(): string
+    {
+        return '';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

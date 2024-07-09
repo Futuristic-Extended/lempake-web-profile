@@ -27,7 +27,7 @@ class CreateArticle extends CreateRecord
 
     public function getBreadcrumb(): string
     {
-        return 'Tulis artikel';
+        return 'Tulis';
     }
 
     protected function mutateFormDataBeforeCreate(array $data): array
