@@ -2,14 +2,15 @@
 
 namespace App\Trait;
 
+use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Intervention\Image\ImageManager;
 use RuntimeException;
 
 trait ResizeImage {
-  protected ImageManager $imageManager;
+    protected ImageManager $imageManager;
     
-  protected Filesystem $disk;
+    protected Filesystem $disk;
 
   	/**
      * Gets the file's basename and extension from the given thumbnail's filename.

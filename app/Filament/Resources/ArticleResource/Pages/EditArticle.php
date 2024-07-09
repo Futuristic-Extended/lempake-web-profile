@@ -5,7 +5,6 @@ namespace App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
@@ -20,6 +19,12 @@ class EditArticle extends EditRecord
 
     protected static string $resource = ArticleResource::class;
 
+    public function __construct()
+    {
+        $this->imageManager = ImageManager::imagick();
+        $this->disk = Storage::disk('thumbnails');
+    }
+
     public function getBreadcrumb(): string
     {
         return 'Tulis ulang';
@@ -28,12 +33,6 @@ class EditArticle extends EditRecord
     public function getTitle(): string | Htmlable
     {
         return $this->record->title;
-    }
-
-    public function __construct()
-    {
-        $this->imageManager = ImageManager::imagick();
-        $this->disk = Storage::disk('thumbnails');
     }
 
     protected function getHeaderActions(): array
