@@ -2,7 +2,6 @@
 
 namespace App\Trait;
 
-use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Intervention\Image\ImageManager;
 use RuntimeException;
