@@ -16,27 +16,33 @@
 
     <div class="row gy-4 mt-5">
       <div class="col-12 col-lg-6" data-aos="zoom-out" data-aos-delay="100">
-        <div class="icon-box py-5">
-          <div class="icon"><i class="bi bi-person-lines-fill"></i></div>
-          <h4 class="title"><a href="">Profil</a></h4>
-          <p class="description">Sambutan, Sejarah, Visi dan Misi, Tugas Pokok, serta para personil Kelurahan.</p>
-        </div>
+        <a href="#">
+          <div class="icon-box py-5">
+            <div class="icon"><i class="bi bi-person-lines-fill"></i></div>
+            <h4 class="title">Profil</h4>
+            <p class="description">Sambutan, Sejarah, Visi dan Misi, Tugas Pokok, serta para personil Kelurahan.</p>
+          </div>
+        </a>
       </div>
 
       <div class="col-12 col-lg-6" data-aos="zoom-out" data-aos-delay="200">
-        <div class="icon-box py-5">
-          <div class="icon"><i class="bi bi-info-circle-fill"></i></div>
-          <h4 class="title"><a href="">Informasi</a></h4>
-          <p class="description">Kontak/Telepon penting, berita, pengumuman, dan agenda seputar kelurahan Lempake.</p>
-        </div>
+        <a href="#">
+          <div class="icon-box py-5">
+            <div class="icon"><i class="bi bi-info-circle-fill"></i></div>
+            <h4 class="title">Informasi</h4>
+            <p class="description">Kontak/Telepon penting, berita, pengumuman, dan agenda seputar kelurahan Lempake.</p>
+          </div>
+        </a>
       </div>
 
       <div class="col-12" data-aos="zoom-out" data-aos-delay="300">
-        <div class="icon-box py-5">
-          <div class="icon"><i class="bi bi-images"></i></div>
-          <h4 class="title"><a href="">Media</a></h4>
-          <p class="description">Koleksi foto, video, dan dokumen terkait kelurahan Lempake.</p>
-        </div>
+        <a href="#">
+          <div class="icon-box py-5">
+            <div class="icon"><i class="bi bi-images"></i></div>
+            <h4 class="title">Media</h4>
+            <p class="description">Koleksi foto, video, dan dokumen terkait kelurahan Lempake.</p>
+          </div>
+        </a>
       </div>
     </div>
   </div>

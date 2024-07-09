@@ -21,21 +21,22 @@
 :root { 
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #124265; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #2487ce; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --heading-color: #162C45; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #1E3A5F; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #124265;  /* The default color of the main navmenu links */
-  --nav-hover-color: #2487ce; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-color: #162C45;  /* The default color of the main navmenu links */
+  --nav-hover-color: #14233A; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #124265; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #2487ce; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-color: #162C45; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #14233A; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
+
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
@@ -490,7 +491,7 @@ h6 {
     background-color: var(--nav-dropdown-background-color);
     border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
     box-shadow: none;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out 0.1s;
   }
 
   .navmenu .dropdown ul ul {
@@ -899,23 +900,24 @@ section,
   padding: 50px 30px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 29px 0 rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
   border-radius: 8px;
   z-index: 1;
   height: 100%;
   width: 100%;
+  transition: all 0s ease-in-out 0.1s;
+}
+
+.hero .icon-box * {
+  transition: color 0.1s ease-in-out 0.1s;
 }
 
 .hero .icon-box .title {
   font-weight: 700;
   margin-bottom: 15px;
   font-size: 18px;
-}
 
-.hero .icon-box .title a {
   color: var(--heading-color);
-  transition: 0.3s;
 }
 
 .hero .icon-box .description {
@@ -928,7 +930,6 @@ section,
   margin-bottom: 20px;
   padding-top: 10px;
   display: inline-block;
-  transition: all 0.3s ease-in-out;
   font-size: 36px;
   line-height: 1;
   color: var(--accent-color);
@@ -936,11 +937,11 @@ section,
 
 @media (min-width: 640px) {
   .hero .icon-box:hover {
-    transform: scale(1.08);
+    background-color: var(--accent-color);
   }
 
-  .hero .icon-box:hover .title a {
-    color: var(--accent-color);
+  .hero .icon-box:hover * {
+    color: var(--contrast-color);
   }
 }
 
@@ -1365,7 +1366,7 @@ section,
   line-height: 1;
   margin-bottom: 5px;
   border-radius: 50px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out 0.1s;
   font-family: var(--heading-font);
 }
 
@@ -1675,7 +1676,7 @@ section,
 .faq .faq-container .faq-item .faq-content {
   display: grid;
   grid-template-rows: 0fr;
-  transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out 0.1s;
   visibility: hidden;
   opacity: 0;
 }
@@ -1738,7 +1739,7 @@ section,
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out 0.1s;
   margin-right: 15px;
 }
 
