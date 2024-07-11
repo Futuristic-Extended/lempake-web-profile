@@ -838,7 +838,7 @@ section,
   z-index: 2;
 }
 
-.hero img {
+.hero #background-image {
   position: absolute;
   inset: 0;
   display: block;
@@ -943,6 +943,24 @@ section,
   .hero .icon-box:hover * {
     color: var(--contrast-color);
   }
+}
+
+/*--------------------------------------------------------------
+# Location Section
+--------------------------------------------------------------*/
+
+#headman .title {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 18px;
+
+  color: var(--heading-color);
+}
+
+#headman .description {
+  font-size: 15px;
+  margin-bottom: 0;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
 }
 
 /*--------------------------------------------------------------
