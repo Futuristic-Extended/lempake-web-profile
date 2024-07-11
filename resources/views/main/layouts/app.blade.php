@@ -16,7 +16,7 @@
     ======================================================== -->
   </head>
   <body class="index-page">
-    @include('main.layouts.navbar')
+    {{-- @include('main.layouts.navbar') --}}
 
     <main class="main">
       @yield('content')

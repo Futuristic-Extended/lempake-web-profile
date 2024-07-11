@@ -538,7 +538,6 @@ h6 {
   background-color: var(--background-color);
   border-top: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
   font-size: 14px;
-  padding-bottom: 50px;
   position: relative;
 }
 
@@ -826,7 +825,7 @@ section,
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 0 60px 0;
+  padding: 0 0 60px 0;
   overflow: hidden;
 }
 

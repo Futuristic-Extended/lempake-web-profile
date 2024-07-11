@@ -56,7 +56,7 @@
     </div>
   </div>
 
-  <div class="container copyright text-center mt-4">
+  <div class="container-fluid copyright text-center mt-4">
     <p>© <span>Copyright</span> <strong class="px-1 sitename">OnePage</strong> <span>All Rights Reserved</span></p>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
