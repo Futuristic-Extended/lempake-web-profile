@@ -18,8 +18,11 @@
   <body class="index-page">
     {{-- @include('main.layouts.navbar') --}}
 
-    <main class="main">
-      @yield('content')
+    <main class="pb-5">
+      <img src="assets/main/img/hero-bg-abstract.jpg" id="background-image" alt="Background">
+      <div id="content">
+        @yield('content')
+      </div>
     </main>
 
     @include('main.layouts.footer')
