@@ -54,6 +54,13 @@
       </div>
     </div>
 
+    <div class="card mb-5" id="information-schedule" data-aos="zoom-in" data-aos-delay="50">
+      <div class="card-body">
+        <h2 class="title">Jadwal Pelayanan Informasi</h2>
+        <p class="description">Senin s/d Kamis : 08.30 - 15.30 Jumat : 08.30 - 11.00 Sabtu & Minggu : Libur</p>
+      </div>
+    </div>
+
     <div class="row" id="headman" data-aos="zoom-in">
       <div class="d-none col-lg-3 d-lg-block">
         <div class="card">

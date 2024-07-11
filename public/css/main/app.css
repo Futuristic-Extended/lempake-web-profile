@@ -954,6 +954,19 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 40%);
 }
 
+#information-schedule .title {
+  font-weight: 700;
+  font-size: 18px;
+
+  color: var(--heading-color);
+}
+
+#information-schedule .description {
+  font-size: 15px;
+  margin-bottom: 0;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+}
+
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
