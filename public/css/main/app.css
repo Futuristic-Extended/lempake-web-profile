@@ -905,11 +905,7 @@ section,
   z-index: 1;
   height: 100%;
   width: 100%;
-  transition: all 0s ease-in-out 0.1s;
-}
-
-.hero .icon-box * {
-  transition: color 0.1s ease-in-out 0.1s;
+  transition: all 0.2s ease-in-out;
 }
 
 .hero .icon-box .title {
@@ -937,11 +933,7 @@ section,
 
 @media (min-width: 640px) {
   .hero .icon-box:hover {
-    background-color: var(--accent-color);
-  }
-
-  .hero .icon-box:hover * {
-    color: var(--contrast-color);
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
   }
 }
 
