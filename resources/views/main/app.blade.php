@@ -45,19 +45,29 @@
       <div class="col-12 col-lg-6" data-aos="zoom-in" data-aos-delay="50">
         <a href="#">
           <div class="icon-box py-5">
-            <div class="icon"><i class="bi bi-info-circle-fill"></i></div>
+            <div class="icon"><i class="bi bi-newspaper"></i></div>
             <h4 class="title">Informasi</h4>
-            <p class="description">Kontak/Telepon penting, berita, pengumuman, dan agenda seputar kelurahan Lempake.</p>
+            <p class="description">Kontak/Telepon penting, berita, pengumuman, dan jadwal agenda seputar kelurahan Lempake.</p>
           </div>
         </a>
       </div>
 
-      <div class="col-12" data-aos="zoom-in" data-aos-delay="50">
+      <div class="col-12 col-lg-6" data-aos="zoom-in" data-aos-delay="50">
         <a href="#">
           <div class="icon-box py-5">
             <div class="icon"><i class="bi bi-images"></i></div>
             <h4 class="title">Media</h4>
             <p class="description">Koleksi foto, video, dan dokumen terkait kelurahan Lempake.</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 col-lg-6" data-aos="zoom-in" data-aos-delay="50">
+        <a href="#">
+          <div class="icon-box py-5">
+            <div class="icon"><i class="bi bi-shop"></i></div>
+            <h4 class="title">UMKM</h4>
+            <p class="description">Usaha-usaha yang terdapat di sekitar wilayah Lempake.</p>
           </div>
         </a>
       </div>
