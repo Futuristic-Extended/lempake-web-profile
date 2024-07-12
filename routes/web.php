@@ -13,14 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-  return view('main.app');
+Route::get('/', function() {
+  return view('main.home.index');
 });
 
-Route::get('/portfolio', function () {
-  return view('main.portfolio-details');
-});
-
-Route::get('/service', function () {
-  return view('main.service-details');
+Route::get('/profil', function() {
+  return view('main.profile.index');
 });

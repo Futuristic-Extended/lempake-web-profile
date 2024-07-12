@@ -16,9 +16,9 @@
     ======================================================== -->
   </head>
   <body class="index-page">
-    {{-- @include('main.layouts.navbar') --}}
+    @includeWhen(isset($useNavbar) && $useNavbar, 'main.layouts.navbar')
 
-    <main class="pb-5">
+    <main class="py-5">
       <img src="assets/main/img/hero-bg-abstract.jpg" id="background-image" alt="Background">
       <div id="content">
         @yield('content')

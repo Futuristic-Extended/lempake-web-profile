@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row gy-4 mb-5">
       <div class="col-12 col-lg-6" data-aos="zoom-in" data-aos-delay="50">
-        <a href="#">
+        <a href="{{ url('/profil') }}">
           <div class="icon-box py-5">
             <div class="icon"><i class="bi bi-person-lines-fill"></i></div>
             <h4 class="title">Profil</h4>
