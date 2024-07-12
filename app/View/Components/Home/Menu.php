@@ -11,10 +11,12 @@ class Menu extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        public string $icon,
+        public string $name,
+        public string $description,
+        public string $route
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

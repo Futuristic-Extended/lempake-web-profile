@@ -7,16 +7,36 @@
     <div class="container">
       <div class="row gy-4 mb-5">
         <div class="col-12 col-lg-6" data-aos="zoom-in" data-aos-delay="50">
-          <x-home.menu />
+          <x-home.menu
+            icon="bi bi-person-lines-fill"
+            name="Profil"
+            description="Sambutan, Sejarah, Visi dan Misi, Tugas Pokok, serta para personil Kelurahan."
+            route="{{ url('/profil') }}"
+          />
         </div>
         <div class="col-12 col-lg-6" data-aos="zoom-in" data-aos-delay="50">
-          <x-home.menu />
+          <x-home.menu
+            icon="bi bi-newspaper"
+            name="Informasi"
+            description="Kontak/Telepon penting, berita, pengumuman, dan jadwal agenda seputar kelurahan Lempake."
+            route="{{ url('/profil') }}"
+          />
         </div>
         <div class="col-12 col-lg-6" data-aos="zoom-in" data-aos-delay="50">
-          <x-home.menu />
+          <x-home.menu
+            icon="bi bi-images"
+            name="Media"
+            description="Koleksi foto, video, dan dokumen terkait kelurahan Lempake."
+            route="{{ url('/profil') }}"
+          />
         </div>
         <div class="col-12 col-lg-6" data-aos="zoom-in" data-aos-delay="50">
-          <x-home.menu />
+          <x-home.menu
+            icon="bi bi-shop"
+            name="UMKM"
+            description="Usaha-usaha yang terdapat di sekitar wilayah Lempake."
+            route="{{ url('/profil') }}"
+          />
         </div>
       </div>
     </div>
