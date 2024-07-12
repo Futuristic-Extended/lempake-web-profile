@@ -1,6 +1,4 @@
-@extends('main.layouts.app', ['useNavbar' => true])
-
-@section('content')
+<x-layout.app>
   <div class="container">
     <div class="row">
       <div class="col-12 col-lg-2 mb-3 mb-lg-5">
@@ -86,4 +84,4 @@
       </div>
     </div>
   </div>
-@endsection
+</x-layout.app>
