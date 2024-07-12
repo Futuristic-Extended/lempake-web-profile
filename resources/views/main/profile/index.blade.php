@@ -64,15 +64,21 @@
         <div class="card">
           <div class="row">
             <div class="col-3">
-              <img src="https://kel-lempake.samarindakota.go.id/upload/personnels/lempake/2024-03/27/musliadi-ssosvfcXG_m.jpeg" class="mb-0 w-100 rounded-start" alt="Lurah">
+              <img src="https://kel-lempake.samarindakota.go.id/upload/personnels/lempake/2024-03/27/musliadi-ssosvfcXG_m.jpeg" class="mb-0 h-100 w-100 rounded-start" alt="Lurah">
             </div>
             <div class="col-9 d-flex align-items-center">
               <div class="card-body">
-                <h3 class="fs-2">Musliadi, S.Sos</h3>
-                <i class="d-block mb-4 fs-6 text-secondary">Lurah</i>
-
-                <p class="mb-0">Telepon: 08898989898</p>
-                <p class="mb-0">Email : musliadi@gmail.com</p>
+                <h3 class="fs-1 fw-bold">Musliadi, S.Sos</h3>
+                <i class="d-block mb-3 mb-lg-4 fs-6 text-secondary">Lurah</i>
+                
+                <p class="mb-2">
+                  <i class="bi bi-telephone me-1"></i>
+                  <span>08898989898</span>
+                </p>
+                <p class="mb-0">
+                  <i class="bi bi-envelope me-1"></i>
+                  <span>musliadi@gmail.com</span>
+                </p>
               </div>
             </div>
           </div>
