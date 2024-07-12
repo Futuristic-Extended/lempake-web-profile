@@ -11,9 +11,15 @@ class Navbar extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public bool $show = true)
+    {}
+
+    /**
+     * Whether the component should be rendered
+     */
+    public function shouldRender(): bool
     {
-        //
+        return $this->show;
     }
 
     /**

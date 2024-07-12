@@ -1,4 +1,4 @@
-<x-layout.app>
+<x-layout.app :isNavbarShown="false">
   <section id="hero" class="section d-flex align-items-center justify-content-center container">
     <x-home.hero />
   </section>
