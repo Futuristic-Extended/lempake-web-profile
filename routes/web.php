@@ -20,3 +20,7 @@ Route::get('/', function() {
 Route::get('/profil', function() {
   return view('main.profile.index');
 });
+
+Route::get('/informations', function() {
+  return view('main.informations.index');
+});
