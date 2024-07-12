@@ -3,16 +3,16 @@
     <div class="container">
       <ul class="list-group list-group-horizontal">
         <li class="list-group-item">
-          <x-informations.menu />
+          <x-informations.menu icon="bi bi-newspaper" name="Berita" :route="route('under-construction')" />
         </li>
         <li class="list-group-item">
-          <x-informations.menu />
+          <x-informations.menu icon="bi bi-megaphone" name="Pengumuman" :route="route('under-construction')" />
         </li>
         <li class="list-group-item">
-          <x-informations.menu />
+          <x-informations.menu icon="bi bi-calendar" name="Agenda" :route="route('under-construction')" />
         </li>
         <li class="list-group-item">
-          <x-informations.menu />
+          <x-informations.menu icon="bi bi-telephone" name="Telepon Penting" :route="route('under-construction')" />
         </li>
       </ul>
     </div>

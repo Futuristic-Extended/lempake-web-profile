@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InformationsController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function() {
-  return view('main.home');
-});
+Route::get('/', HomeController::class)->name('home');
 
-Route::get('/profil', function() {
-  return view('main.profile');
-});
+Route::get('/profil', ProfileController::class)->name('profile');
 
-Route::get('/informations', function() {
-  return view('main.informations');
-});
+Route::get('/informations', InformationsController::class)->name('informations');
+
+Route::get('/404', fn () => abort(404))->name('under-construction');
