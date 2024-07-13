@@ -6,11 +6,11 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <title>Index - OnePage Bootstrap Template</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
-    <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    <link href="{{ asset('assets/main/img/favicons/favicon.ico') }}" rel="icon">
+    <link href="{{ asset('assets/main/img/favicons/apple-touch-icon.png') }}" rel="apple-touch-icon">
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
