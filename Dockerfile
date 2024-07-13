@@ -51,21 +51,8 @@ RUN chmod -R 775 storage
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-RUN cat > /etc/apache2/sites-available/000-default.conf <<EOF
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/html/public
-
-    <Directory /var/www/html/public>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
-    </Directory>
-
-    ErrorLog \${APACHE_LOG_DIR}/error.log
-    CustomLog \${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-EOF
+RUN chmod +x write_apache_config.sh
+RUN . ./write_apache_config.sh
 
 EXPOSE 80
 
