@@ -52,5 +52,8 @@ RUN chown -R www-data:www-data bootstrap/cache storage && \
 EXPOSE 80
 RUN php artisan optimize
 
+# Restart the Apache2
+RUN service apache2 restart
+
 # Start Apache (combined commands)
-CMD service apache2 restart && apache2ctl -D FOREGROUND
+CMD ["apache2ctl", "-D", "FOREGROUND"]
