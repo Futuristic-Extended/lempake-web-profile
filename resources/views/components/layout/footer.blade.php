@@ -3,7 +3,7 @@
 		<div class="row justify-content-between gy-4">
 			<div class="col-lg-5 col-12 footer-about d-flex items-start">
 				<div>
-					<img src="assets/main/img/logo-pemkot.png" class="me-3" alt="Pemerintah Kota Samarinda">
+					<img src="{{ asset('assets/main/img/logo-pemkot.png') }}" class="me-3" alt="Pemerintah Kota Samarinda">
 				</div>
 				<div>
 					<p>Pemerintah Kota Samarinda</p>

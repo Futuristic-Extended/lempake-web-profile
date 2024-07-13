@@ -39,7 +39,7 @@
     <x-layout.navbar :show="$isNavbarShown" />
 
     <main class="py-5">
-      <img src="assets/main/img/hero-bg-abstract.jpg" id="background-image" alt="Background">
+      <img src="{{ asset('assets/main/img/hero-bg-abstract.jpg') }}" id="background-image" alt="Background">
       <div id="content">
         {{ $slot }}
       </div>
