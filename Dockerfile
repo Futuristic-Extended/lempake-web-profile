@@ -43,7 +43,6 @@ RUN npm run build
 RUN chown -R www-data:www-data bootstrap/cache
 RUN chmod -R 775 bootstrap/cache
 
-RUN rm public/storage
 RUN php artisan storage:link
 
 RUN chown -R www-data:www-data storage
