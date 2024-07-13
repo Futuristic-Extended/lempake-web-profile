@@ -1,8 +1,9 @@
 services:
   web:
+    image: lempake-web-profile-web:latest
     build: .
     ports:
-      - "80:80"
+      - "8181:80"
     environment:
       - APP_NAME
       - APP_KEY

@@ -1,62 +1,56 @@
+# Base image
 FROM ubuntu:jammy
 
+# Environment variables and arguments
 ARG DEBIAN_FRONTEND=noninteractive
-
 ENV NODE_VERSION=18.20.3
 ENV NVM_DIR=/root/.nvm
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
-USER root
+# Install packages (consolidated for better layer caching)
+RUN apt update -y && \
+  apt upgrade -y && \
+  apt install -y \
+    apache2 \
+    php \
+    php-bcmath php-json php-mbstring php-tokenizer php-xml php-curl php-gd php-intl php-zip php-mysql \
+    imagemagick php-imagick \
+    composer \
+    curl
 
-RUN apt update -y
-RUN apt upgrade -y
+# Install Node.js using NVM
+RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && \
+  . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION} && \
+  . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION} && \
+  . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 
-RUN apt install apache2 -y
-
-RUN apt install php -y
-RUN a2enmod rewrite
-RUN a2enmod php8.1
-
-RUN apt install php-bcmath php-json php-mbstring php-tokenizer php-xml php-curl php-gd php-intl php-zip php-mysql -y
-
-RUN apt install imagemagick php-imagick -y
-
-RUN apt install composer -y
-
-RUN apt install curl -y
-RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-
+# Set working directory
 WORKDIR /var/www/html
 
-RUN rm -rf ./*
+# Clear out existing files
+RUN rm -rf ./* 
 
+# Copy project files
 COPY . .
 
-RUN composer update
+# Install project dependencies
+RUN composer update && \
+  npm install && \
+  npm run build
 
-RUN npm install
-RUN npm run build
+# Apache configuration
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
+  a2enmod rewrite php8.1
+RUN chmod +x write_apache_config.sh && . ./write_apache_config.sh
 
-RUN chown -R www-data:www-data bootstrap/cache
-RUN chmod -R 775 bootstrap/cache
+# Permissions (consolidated)
+RUN chown -R www-data:www-data bootstrap/cache storage && \
+  chmod -R 775 bootstrap/cache storage && \
+  php artisan storage:link
 
-RUN php artisan storage:link
-
-RUN chown -R www-data:www-data storage
-RUN chmod -R 775 storage
-
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-RUN chmod +x write_apache_config.sh
-RUN . ./write_apache_config.sh
-
+# Expose port and optimize
 EXPOSE 80
-
 RUN php artisan optimize
 
-RUN service apache2 restart
-
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+# Start Apache (combined commands)
+CMD service apache2 restart && apache2ctl -D FOREGROUND
