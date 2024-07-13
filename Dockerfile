@@ -48,6 +48,10 @@ RUN chown -R www-data:www-data bootstrap/cache storage && \
   chmod -R 775 bootstrap/cache storage && \
   php artisan storage:link
 
+# Create .env file
+RUN cp .env.example .env
+RUN php artisan key:generate
+
 # Expose port and optimize
 EXPOSE 80
 RUN php artisan optimize
