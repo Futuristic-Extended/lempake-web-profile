@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformationsController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,5 @@ Route::get('/profil', ProfileController::class)->name('profile');
 Route::get('/informations', InformationsController::class)->name('informations');
 
 Route::get('/404', fn () => abort(404))->name('under-construction');
+
+Route::get('/optimize', fn () => Artisan::call('optimize'));
