@@ -55,6 +55,8 @@ RUN . ./write_apache_config.sh
 
 EXPOSE 80
 
+RUN php artisan optimize
+
 RUN service apache2 restart
 
 CMD ["apache2ctl", "-D", "FOREGROUND"]
